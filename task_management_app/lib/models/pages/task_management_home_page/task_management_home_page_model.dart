@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../providers/todo_provider.dart';
+import '../../../providers/providers.dart';
 import '../../models.dart';
 
 class TaskManagementHomePageModel extends ChangeNotifier {
@@ -23,8 +23,14 @@ class TaskManagementHomePageModel extends ChangeNotifier {
   }
 
   void toggleTodoCompletion(TodoItemData togglingCompletionTodo) {
+    final isCompleted = !togglingCompletionTodo.isCompleted;
+    final createdAt = togglingCompletionTodo.createdAt;
+    final completedAt = isCompleted ? DateTime.now().toIso8601String() : "";
     final updatedTodo = togglingCompletionTodo.copyWith(
-        isCompleted: !togglingCompletionTodo.isCompleted);
+      isCompleted: isCompleted,
+      createdAt: createdAt,
+      completedAt: completedAt,
+    );
     todoProvider.updateTodo(updatedTodo);
     notifyListeners();
   }

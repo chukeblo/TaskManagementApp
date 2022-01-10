@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'providers/todo_provider.dart';
 import 'utilities/utilities.dart';
-import 'views/pages/login_page.dart';
+import 'views/views.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

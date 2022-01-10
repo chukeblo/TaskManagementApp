@@ -25,8 +25,10 @@ class TodoProvider with ChangeNotifier {
       return TodoItemData(
         id: maps[i]["id"],
         title: maps[i]["title"],
+        tag: maps[i]["tag"],
         isCompleted: maps[i]["isCompleted"],
         createdAt: maps[i]["createdAt"],
+        completedAt: maps[i]["completedAt"],
         memo: maps[i]["memo"],
       );
     });

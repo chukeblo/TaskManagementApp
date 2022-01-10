@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management_app/views/widgets/dialogs/todo_add_dialog.dart';
-import 'package:task_management_app/views/widgets/dialogs/todo_edit_dialog.dart';
 
 import '../../models/models.dart';
-import 'login_page.dart';
+import '../../views/views.dart';
 
 class TaskManagementHomePage extends StatelessWidget {
   const TaskManagementHomePage._({
@@ -57,7 +55,24 @@ class TaskManagementHomePage extends StatelessWidget {
           return Card(
             color: todo.isCompleted ? Colors.greenAccent : null,
             child: ListTile(
-              title: Text(todo.title),
+              title: Column(
+                children: [
+                  Text(
+                    todo.title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Text(
+                    "${todo.createdAt} ~ ${todo.completedAt}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16,
+                    ),
+                  )
+                ],
+              ),
               onTap: () {
                 model.toggleTodoCompletion(todo);
               },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management_app/models/widgets/dialogs/todo/todo_add_dialog_model.dart';
+
+import '../../../models/models.dart';
 
 class TodoAddDialog extends StatelessWidget {
   const TodoAddDialog._({

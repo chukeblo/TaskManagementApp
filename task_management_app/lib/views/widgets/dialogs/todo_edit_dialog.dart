@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management_app/models/widgets/dialogs/todo/todo_edit_dialog_model.dart';
-import 'package:task_management_app/providers/todo_provider.dart';
 
 import '../../../models/models.dart';
+import '../../../providers/providers.dart';
 
 class TodoEditDialog extends StatelessWidget {
   const TodoEditDialog._({

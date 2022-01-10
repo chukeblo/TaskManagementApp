@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 Future<Database> initializeDatabase() async {
   final database = openDatabase(
-    join(await getDatabasesPath(), "dummy_database.db"),
+    join(await getDatabasesPath(), "dummy_database_2.db"),
     onCreate: _onCreate,
     onUpgrade: _onUpgrade,
     version: 1,
@@ -37,7 +37,7 @@ Future<void> _migrate(Database database, int oldVersion, int newVersion) async {
 
 const migrationScripts = {
   '1': [
-    'CREATE TABLE todo(id INTEGER PRIMARY KEY, title TEXT, isCompleted TEXT, createdAt TEXT, memo TEXT)'
+    'CREATE TABLE todo(id INTEGER PRIMARY KEY, title TEXT, isCompleted INTEGER, tag TEXT, createdAt TEXT, completedAt TEXT, memo TEXT)'
   ],
-  '2': ['ALTER TABLE todo ADD COLUMN videoPath TEXT;'],
+  '2': ['ALTER TABLE todo ADD COLUMN undefined TEXT;'],
 };

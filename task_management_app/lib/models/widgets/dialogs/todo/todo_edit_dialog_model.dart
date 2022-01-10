@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../models/models.dart';
-import '../../../../providers/todo_provider.dart';
+import '../../../../providers/providers.dart';
 
 class TodoEditDialogModel extends ChangeNotifier {
   TodoEditDialogModel({
