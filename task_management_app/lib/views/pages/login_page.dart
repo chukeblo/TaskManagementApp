@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management_app/models/login/login_error_type.dart';
-import 'package:task_management_app/models/login/login_page_model.dart';
 
+import '../../models/models.dart';
 import 'task_management_home_page.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage._({Key? key}) : super(key: key);
 
   final TextEditingController _userIdController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  static Widget withDependencies({required BuildContext context}) {
+    return ChangeNotifierProvider(
+      create: (_context) => LoginPageModel(),
+      child: LoginPage._(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +53,7 @@ class LoginPage extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  onPressed: () async {
+                  onPressed: () {
                     if (_userIdController.text.isEmpty ||
                         _passwordController.text.isEmpty) {
                       model.updateErrorMessage(LoginErrorType.lacksInformation);
@@ -57,12 +63,15 @@ class LoginPage extends StatelessWidget {
                         _passwordController.text == "4649") {
                       model.updateErrorMessage(LoginErrorType.registering);
                     } else {
-                      await Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) {
-                        return TaskManagementHomePage(
-                          userId: _userIdController.text,
-                        );
-                      }));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return TaskManagementHomePage.withDependencies(
+                            context: context,
+                            userId: _userIdController.text,
+                          );
+                        }),
+                      );
                     }
                   },
                   child: const Text(
@@ -91,12 +100,15 @@ class LoginPage extends StatelessWidget {
                         _passwordController.text == "4649") {
                       model.updateErrorMessage(LoginErrorType.loggingIn);
                     } else {
-                      await Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) {
-                        return TaskManagementHomePage(
-                          userId: _userIdController.text,
-                        );
-                      }));
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return TaskManagementHomePage.withDependencies(
+                            context: context,
+                            userId: _userIdController.text,
+                          );
+                        }),
+                      );
                     }
                   },
                   child: const Text(

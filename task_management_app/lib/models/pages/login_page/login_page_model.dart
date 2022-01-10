@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_management_app/models/login/login_error_type.dart';
+
+import 'login_error_type.dart';
 
 class LoginPageModel extends ChangeNotifier {
   String errorMessage = "";

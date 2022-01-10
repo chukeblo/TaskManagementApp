@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management_app/models/login/login_page_model.dart';
 
+import 'providers/todo_provider.dart';
+import 'utilities/utilities.dart';
 import 'views/pages/login_page.dart';
 
-void main() {
-  runApp(const TaskManagementApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final database = await initializeDatabase();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => TodoProvider(database: database),
+        ),
+      ],
+      child: const TaskManagementApp(),
+    ),
+  );
 }
 
 class TaskManagementApp extends StatelessWidget {
@@ -16,10 +28,7 @@ class TaskManagementApp extends StatelessWidget {
     return MaterialApp(
       title: "Task Management App",
       debugShowCheckedModeBanner: false,
-      home: ChangeNotifierProvider<LoginPageModel>(
-        create: (context) => LoginPageModel(),
-        child: LoginPage(),
-      ),
+      home: LoginPage.withDependencies(context: context),
     );
   }
 }
