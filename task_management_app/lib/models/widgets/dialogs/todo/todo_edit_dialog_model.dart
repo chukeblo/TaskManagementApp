@@ -11,30 +11,18 @@ class TodoEditDialogModel extends ChangeNotifier {
   }) {
     titleController.text = title;
     memoController.text = memo;
-    _title = title;
-    _memo = memo;
   }
 
   final TodoProvider todoProvider;
   final titleController = TextEditingController();
   final memoController = TextEditingController();
 
-  late String _title = "";
-  late String _memo = "";
-
   void editTodo(TodoItemData editingTodo) {
-    final updatedTodo = editingTodo.copyWith(title: _title, memo: _memo);
+    final updatedTodo = editingTodo.copyWith(
+      title: titleController.text,
+      memo: memoController.text,
+    );
     todoProvider.updateTodo(updatedTodo);
-    notifyListeners();
-  }
-
-  void onTitleChanged(String newTitle) {
-    _title = newTitle;
-    notifyListeners();
-  }
-
-  void onMemoChanged(String text) {
-    _memo = text;
     notifyListeners();
   }
 }

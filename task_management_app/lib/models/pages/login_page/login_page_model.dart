@@ -3,22 +3,39 @@ import 'package:flutter/material.dart';
 import 'login_error_type.dart';
 
 class LoginPageModel extends ChangeNotifier {
-  String errorMessage = "";
+  String _errorMessage = "";
 
-  void updateErrorMessage(LoginErrorType type) {
+  String get errorMessage => _errorMessage;
+  final TextEditingController userIdController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  String get userId => userIdController.text;
+
+  void _updateErrorMessage(LoginErrorType type) {
     switch (type) {
+      case LoginErrorType.none:
+        _errorMessage = "";
+        break;
       case LoginErrorType.lacksInformation:
-        errorMessage = "both userid and password are required";
+        _errorMessage = "both userid and password are required";
         break;
       case LoginErrorType.registering:
-        errorMessage = "failed to register user info";
+        _errorMessage = "failed to register user info";
         break;
       case LoginErrorType.loggingIn:
-        errorMessage = "failed to log in";
+        _errorMessage = "failed to log in";
         break;
       default:
-        break;
+        throw Exception("not supported login error type");
     }
     notifyListeners();
+  }
+
+  bool isUserInputValid() {
+    if (userIdController.text.isEmpty || passwordController.text.isEmpty) {
+      _updateErrorMessage(LoginErrorType.lacksInformation);
+      return false;
+    }
+    _updateErrorMessage(LoginErrorType.none);
+    return true;
   }
 }

@@ -15,29 +15,16 @@ class TodoAddDialogModel extends ChangeNotifier {
   final titleController = TextEditingController();
   final memoController = TextEditingController();
 
-  late String _title;
-  late String _memo = "";
-
   void addTodo() {
     final todo = TodoItemData(
       id: todoProvider.todoList.length,
-      title: _title,
+      title: titleController.text,
       isCompleted: false,
       createdAt: DateTime.now().toIso8601String(),
-      memo: _memo,
+      memo: memoController.text,
     );
 
     todoProvider.addTodo(todo);
-    notifyListeners();
-  }
-
-  void onTitleChanged(String text) {
-    _title = text;
-    notifyListeners();
-  }
-
-  void onMemoChanged(String text) {
-    _memo = text;
     notifyListeners();
   }
 }

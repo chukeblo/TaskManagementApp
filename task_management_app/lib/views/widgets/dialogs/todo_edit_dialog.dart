@@ -41,7 +41,6 @@ class TodoEditDialog extends StatelessWidget {
                 maxLines: null,
                 autofocus: true,
                 controller: model.titleController,
-                onChanged: model.onTitleChanged,
                 decoration: const InputDecoration(
                   labelText: "Title",
                   contentPadding: EdgeInsets.all(10.0),
@@ -53,7 +52,6 @@ class TodoEditDialog extends StatelessWidget {
                 maxLines: null,
                 autofocus: true,
                 controller: model.memoController,
-                onChanged: model.onMemoChanged,
                 decoration: const InputDecoration(
                   labelText: "Memo",
                   contentPadding: EdgeInsets.all(10.0),
