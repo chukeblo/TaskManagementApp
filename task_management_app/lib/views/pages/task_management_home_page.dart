@@ -56,6 +56,7 @@ class TaskManagementHomePage extends StatelessWidget {
             color: todo.isCompleted ? Colors.greenAccent : null,
             child: ListTile(
               title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     todo.title,
@@ -65,10 +66,11 @@ class TaskManagementHomePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${todo.createdAt} ~ ${todo.completedAt}",
+                    "${todo.format(todo.createdAt)} ~ ${todo.format(todo.completedAt)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.normal,
-                      fontSize: 16,
+                      fontSize: 14,
+                      color: Colors.black,
                     ),
                   )
                 ],
