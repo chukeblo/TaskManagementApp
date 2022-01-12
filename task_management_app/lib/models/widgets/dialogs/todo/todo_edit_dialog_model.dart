@@ -7,14 +7,17 @@ class TodoEditDialogModel extends ChangeNotifier {
   TodoEditDialogModel({
     required this.todoProvider,
     required String title,
+    String tag = "",
     String memo = "",
   }) {
     titleController.text = title;
+    tagController.text = tag;
     memoController.text = memo;
   }
 
   final TodoProvider todoProvider;
   final titleController = TextEditingController();
+  final tagController = TextEditingController();
   final memoController = TextEditingController();
 
   void editTodo(TodoItemData editingTodo) {

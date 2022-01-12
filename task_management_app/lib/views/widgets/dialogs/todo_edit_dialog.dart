@@ -16,12 +16,14 @@ class TodoEditDialog extends StatelessWidget {
     required BuildContext context,
     required TodoItemData editingTodo,
     required String title,
+    String tag = "",
     String memo = "",
   }) {
     return ChangeNotifierProvider(
       create: (_context) => TodoEditDialogModel(
         todoProvider: Provider.of<TodoProvider>(context, listen: false),
         title: title,
+        tag: tag,
         memo: memo,
       ),
       child: TodoEditDialog._(editingTodo: editingTodo),
@@ -43,6 +45,17 @@ class TodoEditDialog extends StatelessWidget {
                 controller: model.titleController,
                 decoration: const InputDecoration(
                   labelText: "Title",
+                  contentPadding: EdgeInsets.all(10.0),
+                  border: InputBorder.none,
+                ),
+              ),
+              TextFormField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                autofocus: true,
+                controller: model.titleController,
+                decoration: const InputDecoration(
+                  labelText: "Tag",
                   contentPadding: EdgeInsets.all(10.0),
                   border: InputBorder.none,
                 ),

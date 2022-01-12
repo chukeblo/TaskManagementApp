@@ -31,7 +31,18 @@ class TodoAddDialog extends StatelessWidget {
                 autofocus: true,
                 controller: model.titleController,
                 decoration: const InputDecoration(
-                  labelText: "title",
+                  labelText: "Title",
+                  contentPadding: EdgeInsets.all(10.0),
+                  border: InputBorder.none,
+                ),
+              ),
+              TextFormField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                autofocus: true,
+                controller: model.tagController,
+                decoration: const InputDecoration(
+                  labelText: "Tag",
                   contentPadding: EdgeInsets.all(10.0),
                   border: InputBorder.none,
                 ),

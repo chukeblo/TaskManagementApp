@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './../../providers/providers.dart';
 import '../../models/models.dart';
 import '../views.dart';
 
 class TodoPage extends StatelessWidget {
-  const TodoPage._({Key? key}) : super(key: key);
+  TodoPage._({Key? key}) : super(key: key);
 
   static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
-      create: (_context) => TodoPageModel(todoProvider: Provider.of(context)),
-      child: const TodoPage._(),
+      create: (_context) =>
+          TodoPageModel(todoProvider: Provider.of<TodoProvider>(context)),
+      child: TodoPage._(),
     );
   }
+
+  List<TodoItemData> todos = [];
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<TodoPageModel>(context, listen: false);
-    final todos = model.todoList;
+    todos = model.todoList;
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -125,6 +129,7 @@ class TodoPage extends StatelessWidget {
     required BuildContext context,
     required TodoItemData editingTodo,
     required String title,
+    String tag = "",
     String memo = "",
   }) {
     showDialog(
@@ -134,6 +139,7 @@ class TodoPage extends StatelessWidget {
             context: context,
             editingTodo: editingTodo,
             title: title,
+            tag: tag,
             memo: memo,
           );
         });

@@ -1,5 +1,5 @@
 class DatabaseConstants {
-  static const String databaseFileName = "dummy_database_10.db";
+  static const String databaseFileName = "dummy_database_12.db";
 
   static const String tableTodo = "todo";
 

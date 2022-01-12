@@ -25,9 +25,6 @@ class TaskManagementHomePage extends StatelessWidget {
   final String userId;
   @override
   Widget build(BuildContext context) {
-    final model =
-        Provider.of<TaskManagementHomePageModel>(context, listen: false);
-    final todos = model.todoList;
     return Scaffold(
       appBar: AppBar(
         title: const Center(
