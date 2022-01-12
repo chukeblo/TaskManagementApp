@@ -61,13 +61,34 @@ class TodoProvider with ChangeNotifier {
   Future<void> deleteTodo(int targetTodoId) async {
     final existingTodoIndex =
         todoList.indexWhere((todo) => todo.id == targetTodoId);
-    todoList.removeAt(existingTodoIndex);
+
+    if (existingTodoIndex == -1) {
+      return;
+    }
 
     await database.delete(
       "todo",
       where: "id = ?",
       whereArgs: [targetTodoId],
     );
+
+    _shrinkAndSynchronizeDatabase(existingTodoIndex + 1);
+    todoList.removeAt(existingTodoIndex);
     notifyListeners();
+  }
+
+  void _shrinkAndSynchronizeDatabase(int startIndex) async {
+    for (var index = startIndex; index < todoList.length; index++) {
+      final todo = todoList[index].copyWith(
+        id: index - 1,
+      );
+      todoList[index] = todo;
+      await database.update(
+        "todo",
+        todo.toMap(),
+        where: "id = ?",
+        whereArgs: [todo.id],
+      );
+    }
   }
 }

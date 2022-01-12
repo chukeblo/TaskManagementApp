@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 Future<Database> initializeDatabase() async {
   final database = openDatabase(
-    join(await getDatabasesPath(), "dummy_database_2.db"),
+    join(await getDatabasesPath(), "dummy_database_10.db"),
     onCreate: _onCreate,
     onUpgrade: _onUpgrade,
     version: 1,

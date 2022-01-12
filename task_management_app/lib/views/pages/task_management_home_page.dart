@@ -53,7 +53,9 @@ class TaskManagementHomePage extends StatelessWidget {
         itemBuilder: (context, index) {
           final todo = todos[index];
           return Card(
-            color: todo.isCompleted ? Colors.greenAccent : null,
+            color: TodoItemData.getCompletionStatus(todo.isCompleted)
+                ? Colors.greenAccent
+                : null,
             child: ListTile(
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +80,7 @@ class TaskManagementHomePage extends StatelessWidget {
               onTap: () {
                 model.toggleTodoCompletion(todo);
               },
-              leading: todo.isCompleted
+              leading: TodoItemData.getCompletionStatus(todo.isCompleted)
                   ? const Icon(
                       Icons.done,
                       color: Colors.green,

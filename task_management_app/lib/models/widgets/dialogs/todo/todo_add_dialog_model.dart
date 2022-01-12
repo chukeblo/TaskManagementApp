@@ -19,7 +19,7 @@ class TodoAddDialogModel extends ChangeNotifier {
     final todo = TodoItemData(
       id: todoProvider.todoList.length,
       title: titleController.text,
-      isCompleted: false,
+      isCompleted: TodoItemData.intFalse,
       createdAt: DateTime.now().toIso8601String(),
       memo: memoController.text,
     );

@@ -23,9 +23,12 @@ class TaskManagementHomePageModel extends ChangeNotifier {
   }
 
   void toggleTodoCompletion(TodoItemData togglingCompletionTodo) {
-    final isCompleted = !togglingCompletionTodo.isCompleted;
+    final isCompleted =
+        TodoItemData.reverseCompletion(togglingCompletionTodo.isCompleted);
     final createdAt = togglingCompletionTodo.createdAt;
-    final completedAt = isCompleted ? DateTime.now().toIso8601String() : "";
+    final completedAt = TodoItemData.getCompletionStatus(isCompleted)
+        ? DateTime.now().toIso8601String()
+        : "";
     final updatedTodo = togglingCompletionTodo.copyWith(
       isCompleted: isCompleted,
       createdAt: createdAt,

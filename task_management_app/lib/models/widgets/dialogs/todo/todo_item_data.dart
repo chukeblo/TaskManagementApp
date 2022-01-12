@@ -3,7 +3,7 @@ class TodoItemData {
     required this.id,
     required this.title,
     this.tag = "",
-    this.isCompleted = false,
+    this.isCompleted = intFalse,
     required this.createdAt,
     this.completedAt = "",
     this.memo = "",
@@ -12,16 +12,19 @@ class TodoItemData {
   final int id;
   final String title;
   final String tag;
-  final bool isCompleted;
+  final int isCompleted;
   final String createdAt;
   final String completedAt;
   final String memo;
+
+  static const int intTrue = 1;
+  static const int intFalse = 0;
 
   TodoItemData copyWith({
     int? id,
     String? title,
     String? tag,
-    bool? isCompleted,
+    int? isCompleted,
     String? createdAt,
     String? completedAt,
     String? memo,
@@ -59,5 +62,13 @@ class TodoItemData {
   @override
   String toString() {
     return "Todo{id:$id,title:$title,tag:$tag,isCompleted:$isCompleted,createdAt:$createdAt,completedAt:$completedAt,memo:$memo}";
+  }
+
+  static int reverseCompletion(int status) {
+    return status == intTrue ? intFalse : intTrue;
+  }
+
+  static bool getCompletionStatus(int status) {
+    return status == intTrue;
   }
 }
