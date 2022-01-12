@@ -1,3 +1,5 @@
+import '../../../../utilities/utilities.dart';
+
 class TodoItemData {
   const TodoItemData({
     required this.id,
@@ -49,19 +51,19 @@ class TodoItemData {
 
   Map<String, dynamic> toMap() {
     return {
-      "id": id,
-      "title": title,
-      "tag": tag,
-      "isCompleted": isCompleted,
-      "createdAt": createdAt,
-      "completedAt": completedAt,
-      "memo": memo,
+      DatabaseConstants.columnId: id,
+      DatabaseConstants.columnTitle: title,
+      DatabaseConstants.columnTag: tag,
+      DatabaseConstants.columnIsCompleted: isCompleted,
+      DatabaseConstants.columnCreatedAt: createdAt,
+      DatabaseConstants.columnCompletedAt: completedAt,
+      DatabaseConstants.columnMemo: memo,
     };
   }
 
   @override
   String toString() {
-    return "Todo{id:$id,title:$title,tag:$tag,isCompleted:$isCompleted,createdAt:$createdAt,completedAt:$completedAt,memo:$memo}";
+    return "${DatabaseConstants.tableTodo}{${DatabaseConstants.columnId}:$id,${DatabaseConstants.columnTitle}:$title,${DatabaseConstants.columnTag}:$tag,${DatabaseConstants.columnIsCompleted}:$isCompleted,${DatabaseConstants.columnCreatedAt}:$createdAt,${DatabaseConstants.columnCompletedAt}:$completedAt,${DatabaseConstants.columnMemo}:$memo}";
   }
 
   static int reverseCompletion(int status) {

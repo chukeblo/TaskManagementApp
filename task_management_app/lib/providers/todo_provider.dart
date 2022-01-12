@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/models.dart';
+import '../utilities/utilities.dart';
 
 class TodoProvider with ChangeNotifier {
   TodoProvider({
@@ -20,16 +21,17 @@ class TodoProvider with ChangeNotifier {
   Future<List<TodoItemData>> getTodoList(
     Database database,
   ) async {
-    final List<Map<String, dynamic>> maps = await database.query("todo");
+    final List<Map<String, dynamic>> maps =
+        await database.query(DatabaseConstants.tableTodo);
     return List.generate(maps.length, (i) {
       return TodoItemData(
-        id: maps[i]["id"],
-        title: maps[i]["title"],
-        tag: maps[i]["tag"],
-        isCompleted: maps[i]["isCompleted"],
-        createdAt: maps[i]["createdAt"],
-        completedAt: maps[i]["completedAt"],
-        memo: maps[i]["memo"],
+        id: maps[i][DatabaseConstants.columnId],
+        title: maps[i][DatabaseConstants.columnTitle],
+        tag: maps[i][DatabaseConstants.columnTag],
+        isCompleted: maps[i][DatabaseConstants.columnIsCompleted],
+        createdAt: maps[i][DatabaseConstants.columnCreatedAt],
+        completedAt: maps[i][DatabaseConstants.columnCompletedAt],
+        memo: maps[i][DatabaseConstants.columnMemo],
       );
     });
   }
@@ -49,9 +51,9 @@ class TodoProvider with ChangeNotifier {
     todoList[index] = newTodo;
 
     await database.update(
-      "todo",
+      DatabaseConstants.tableTodo,
       newTodo.toMap(),
-      where: "id = ?",
+      where: "${DatabaseConstants.columnId} = ?",
       whereArgs: [newTodo.id],
     );
     notifyListeners();
@@ -67,8 +69,8 @@ class TodoProvider with ChangeNotifier {
     }
 
     await database.delete(
-      "todo",
-      where: "id = ?",
+      DatabaseConstants.tableTodo,
+      where: "${DatabaseConstants.columnId} = ?",
       whereArgs: [targetTodoId],
     );
 
@@ -84,9 +86,9 @@ class TodoProvider with ChangeNotifier {
       );
       todoList[index] = todo;
       await database.update(
-        "todo",
+        DatabaseConstants.tableTodo,
         todo.toMap(),
-        where: "id = ?",
+        where: "${DatabaseConstants.columnId} = ?",
         whereArgs: [todo.id],
       );
     }
