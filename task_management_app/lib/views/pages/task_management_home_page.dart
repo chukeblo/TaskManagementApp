@@ -47,110 +47,20 @@ class TaskManagementHomePage extends StatelessWidget {
           )
         ],
       ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: todos.length,
-        itemBuilder: (context, index) {
-          final todo = todos[index];
-          return Card(
-            color: TodoItemData.getCompletionStatus(todo.isCompleted)
-                ? Colors.greenAccent
-                : null,
-            child: ListTile(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    todo.title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Text(
-                    "${todo.format(todo.createdAt)} ~ ${todo.format(todo.completedAt)}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-              ),
-              onTap: () {
-                model.toggleTodoCompletion(todo);
-              },
-              leading: TodoItemData.getCompletionStatus(todo.isCompleted)
-                  ? const Icon(
-                      Icons.done,
-                      color: Colors.green,
-                    )
-                  : null,
-              trailing: Wrap(
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {
-                      model.deleteTodo(index);
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.edit,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {
-                      _showTodoEditDialog(
-                        context: context,
-                        editingTodo: todo,
-                        title: todo.title,
-                        memo: todo.memo,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showTodoAddDialog(context: context);
-        },
-        child: const Icon(Icons.add),
+      body: Center(
+        child: ElevatedButton.icon(
+          label: const Text("TODO"),
+          icon: const Icon(Icons.check_box_outlined),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) {
+                return TodoPage.withDependencies(context: context);
+              }),
+            );
+          },
+        ),
       ),
     );
-  }
-
-  void _showTodoAddDialog({
-    required BuildContext context,
-  }) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return TodoAddDialog.withDependencies(context: context);
-        });
-  }
-
-  void _showTodoEditDialog({
-    required BuildContext context,
-    required TodoItemData editingTodo,
-    required String title,
-    String memo = "",
-  }) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return TodoEditDialog.withDependencies(
-            context: context,
-            editingTodo: editingTodo,
-            title: title,
-            memo: memo,
-          );
-        });
   }
 }

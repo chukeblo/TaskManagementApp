@@ -59,7 +59,6 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: fix the way of pointing to the todo item to be deleted
   Future<void> deleteTodo(int targetTodoId) async {
     final existingTodoIndex =
         todoList.indexWhere((todo) => todo.id == targetTodoId);
