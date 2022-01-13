@@ -41,5 +41,7 @@ const migrationScripts = {
   '1': [
     'CREATE TABLE ${DatabaseConstants.tableTodo}(${DatabaseConstants.columnId} INTEGER PRIMARY KEY, ${DatabaseConstants.columnTitle} TEXT, ${DatabaseConstants.columnIsCompleted} INTEGER, ${DatabaseConstants.columnTag} TEXT, ${DatabaseConstants.columnCreatedAt} TEXT, ${DatabaseConstants.columnCompletedAt} TEXT, ${DatabaseConstants.columnMemo} TEXT)'
   ],
-  '2': ['ALTER TABLE todo ADD COLUMN undefined TEXT;'],
+  '2': [
+    'CREATE TABLE ${DatabaseConstants.tableTask}(${DatabaseConstants.columnId} INTEGER PRIMARY KEY, ${DatabaseConstants.columnTitle} TEXT, ${DatabaseConstants.columnIsCompleted} INTEGER, ${DatabaseConstants.columnTag} TEXT, ${DatabaseConstants.columnCreatedAt} TEXT, ${DatabaseConstants.columnCompletedAt} TEXT, ${DatabaseConstants.columnMemo} TEXT)'
+  ],
 };

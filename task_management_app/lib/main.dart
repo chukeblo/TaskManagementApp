@@ -14,6 +14,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => TodoProvider(database: database),
         ),
+        ChangeNotifierProvider(
+          create: (_) => TaskProvider(database: database),
+        ),
       ],
       child: const TaskManagementApp(),
     ),

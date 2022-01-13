@@ -45,17 +45,34 @@ class TaskManagementHomePage extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: ElevatedButton.icon(
-          label: const Text("TODO"),
-          icon: const Icon(Icons.check_box_outlined),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) {
-                return TodoPage.withDependencies(context: context);
-              }),
-            );
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton.icon(
+              label: const Text("TODO"),
+              icon: const Icon(Icons.check_box_outlined),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return TodoPage.withDependencies(context: context);
+                  }),
+                );
+              },
+            ),
+            ElevatedButton.icon(
+              label: const Text("TASK"),
+              icon: const Icon(Icons.task),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return TaskPage.withDependencies(context: context);
+                  }),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

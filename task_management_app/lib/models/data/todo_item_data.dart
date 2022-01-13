@@ -1,4 +1,4 @@
-import '../../../../utilities/utilities.dart';
+import '../../utilities/utilities.dart';
 
 class TodoItemData {
   const TodoItemData({

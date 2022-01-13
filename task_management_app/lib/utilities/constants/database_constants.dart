@@ -2,6 +2,7 @@ class DatabaseConstants {
   static const String databaseFileName = "dummy_database_12.db";
 
   static const String tableTodo = "todo";
+  static const String tableTask = "task";
 
   static const String columnId = "id";
   static const String columnTitle = "Title";
