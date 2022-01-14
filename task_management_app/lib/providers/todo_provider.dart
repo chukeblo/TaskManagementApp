@@ -39,7 +39,7 @@ class TodoProvider with ChangeNotifier {
   Future<void> addTodo(TodoItemData todo) async {
     todoList.add(todo);
     await database.insert(
-      "todo",
+      DatabaseConstants.tableTodo,
       todo.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );

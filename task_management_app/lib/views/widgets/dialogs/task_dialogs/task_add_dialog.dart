@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/models.dart';
+import '../../../../models/models.dart';
 
-class TodoAddDialog extends StatelessWidget {
-  const TodoAddDialog._({
+class TaskAddDialog extends StatelessWidget {
+  const TaskAddDialog._({
     Key? key,
   }) : super(key: key);
 
   static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
-      create: (_context) => TodoAddDialogModel(
-        todoProvider: Provider.of(context),
+      create: (_context) => TaskAddDialogModel(
+        taskProvider: Provider.of(context),
       ),
-      child: const TodoAddDialog._(),
+      child: const TaskAddDialog._(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<TodoAddDialogModel>(context);
+    final model = Provider.of<TaskAddDialogModel>(context);
     return SimpleDialog(
       children: <Widget>[
         SimpleDialogOption(
@@ -72,7 +72,7 @@ class TodoAddDialog extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      model.addTodo();
+                      model.addTask();
                       Navigator.of(context).pop();
                     },
                     child: const Text("ADD"),

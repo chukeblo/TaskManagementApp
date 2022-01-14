@@ -1,38 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/models.dart';
-import '../../../providers/providers.dart';
+import '../../../../models/models.dart';
 
-class TodoEditDialog extends StatelessWidget {
-  const TodoEditDialog._({
+class TodoAddDialog extends StatelessWidget {
+  const TodoAddDialog._({
     Key? key,
-    required this.editingTodo,
   }) : super(key: key);
 
-  final TodoItemData editingTodo;
-
-  static Widget withDependencies({
-    required BuildContext context,
-    required TodoItemData editingTodo,
-    required String title,
-    String tag = "",
-    String memo = "",
-  }) {
+  static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
-      create: (_context) => TodoEditDialogModel(
-        todoProvider: Provider.of<TodoProvider>(context, listen: false),
-        title: title,
-        tag: tag,
-        memo: memo,
+      create: (_context) => TodoAddDialogModel(
+        todoProvider: Provider.of(context),
       ),
-      child: TodoEditDialog._(editingTodo: editingTodo),
+      child: const TodoAddDialog._(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<TodoEditDialogModel>(context, listen: false);
+    final model = Provider.of<TodoAddDialogModel>(context);
     return SimpleDialog(
       children: <Widget>[
         SimpleDialogOption(
@@ -53,7 +40,7 @@ class TodoEditDialog extends StatelessWidget {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 autofocus: true,
-                controller: model.titleController,
+                controller: model.tagController,
                 decoration: const InputDecoration(
                   labelText: "Tag",
                   contentPadding: EdgeInsets.all(10.0),
@@ -85,10 +72,10 @@ class TodoEditDialog extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      model.addTodo();
                       Navigator.of(context).pop();
-                      model.editTodo(editingTodo);
                     },
-                    child: const Text("EDIT"),
+                    child: const Text("ADD"),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -103,10 +90,9 @@ class TodoEditDialog extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: const Text("CANCEL"),
-                  ),
+                  )
                 ],
               ),
-              const SizedBox(width: 10),
             ],
           ),
         ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management_app/models/models.dart';
-import 'package:task_management_app/providers/providers.dart';
+
+import '../../../models/models.dart';
+import '../../../providers/providers.dart';
+import '../../../views/views.dart';
 
 class TaskPage extends StatelessWidget {
   TaskPage._({Key? key}) : super(key: key);
@@ -23,13 +25,15 @@ class TaskPage extends StatelessWidget {
     tasks = model.taskList;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TASK"),
+        title: const Center(
+          child: Text("TASK"),
+        ),
         actions: <Widget>[
           IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(Icons.home),
           )
         ],
       ),
@@ -112,12 +116,32 @@ class TaskPage extends StatelessWidget {
     );
   }
 
-  void _showTaskAddDialog({required BuildContext context}) {}
+  void _showTaskAddDialog({
+    required BuildContext context,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return TaskAddDialog.withDependencies(context: context);
+      },
+    );
+  }
 
   void _showTaskEditDialog({
     required BuildContext context,
     required TaskItemData editingTask,
     String title = "",
     String memo = "",
-  }) {}
+  }) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return TaskEditDialog.withDependencies(
+            context: context,
+            editingTask: editingTask,
+            title: title,
+            memo: memo,
+          );
+        });
+  }
 }

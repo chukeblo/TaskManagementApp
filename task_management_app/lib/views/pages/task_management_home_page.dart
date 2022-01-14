@@ -40,7 +40,7 @@ class TaskManagementHomePage extends StatelessWidget {
                 }),
               );
             },
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(Icons.menu),
           )
         ],
       ),

@@ -8,7 +8,7 @@ Future<Database> initializeDatabase() async {
     join(await getDatabasesPath(), DatabaseConstants.databaseFileName),
     onCreate: _onCreate,
     onUpgrade: _onUpgrade,
-    version: 1,
+    version: 2,
   );
   return database;
 }

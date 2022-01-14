@@ -1,2 +1,2 @@
-export 'todo_add_dialog.dart';
-export 'todo_edit_dialog.dart';
+export 'task_dialogs/task_dialogs.dart';
+export 'todo_dialogs/todo_dialogs.dart';
