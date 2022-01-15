@@ -133,5 +133,17 @@ class ProjectPage extends StatelessWidget {
     required String title,
     String tag = "",
     String memo = "",
-  }) {}
+  }) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ProjectEditDialog.withDependencies(
+            context: context,
+            editingProject: editingProject,
+            title: title,
+            tag: tag,
+            memo: memo,
+          );
+        });
+  }
 }
