@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_management_app/views/views.dart';
 
 import './../../providers/providers.dart';
 import '../../models/models.dart';
@@ -117,7 +118,14 @@ class ProjectPage extends StatelessWidget {
 
   void _showProjectAddDialog({
     required BuildContext context,
-  }) {}
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ProjectAddDialog.withDependencies(context: context);
+      },
+    );
+  }
 
   void _showProjectEditDialog({
     required BuildContext context,
