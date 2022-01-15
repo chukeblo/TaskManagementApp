@@ -3,6 +3,7 @@ class DatabaseConstants {
 
   static const String tableTodo = "todo";
   static const String tableTask = "task";
+  static const String tableProject = "project";
 
   static const String columnId = "id";
   static const String columnTitle = "Title";

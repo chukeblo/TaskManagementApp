@@ -4,27 +4,27 @@ import 'package:sqflite/sqflite.dart';
 import '../models/models.dart';
 import '../utilities/utilities.dart';
 
-class TaskProvider extends ChangeNotifier {
-  TaskProvider({
+class ProjectProvider extends ChangeNotifier {
+  ProjectProvider({
     required this.database,
   }) {
     initialize();
   }
 
   final Database database;
-  List<TaskItemData> taskList = [];
+  List<ProjectItemData> projectList = [];
 
   Future<void> initialize() async {
-    taskList = await getTaskList(database);
+    projectList = await getProjectList(database);
   }
 
-  Future<List<TaskItemData>> getTaskList(
+  Future<List<ProjectItemData>> getProjectList(
     Database database,
   ) async {
     final List<Map<String, dynamic>> maps =
-        await database.query(DatabaseConstants.tableTask);
+        await database.query(DatabaseConstants.tableProject);
     return List.generate(maps.length, (i) {
-      return TaskItemData(
+      return ProjectItemData(
         id: maps[i][DatabaseConstants.columnId],
         title: maps[i][DatabaseConstants.columnTitle],
         tag: maps[i][DatabaseConstants.columnTag],
@@ -36,59 +36,60 @@ class TaskProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> addTask(TaskItemData task) async {
-    taskList.add(task);
+  Future<void> addProject(ProjectItemData project) async {
+    projectList.add(project);
     await database.insert(
-      DatabaseConstants.tableTask,
-      task.toMap(),
+      DatabaseConstants.tableProject,
+      project.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     notifyListeners();
   }
 
-  Future<void> updateTask(TaskItemData newTask) async {
-    final index = taskList.indexWhere((task) => task.id == newTask.id);
-    taskList[index] = newTask;
+  Future<void> updateProject(ProjectItemData newProject) async {
+    final index =
+        projectList.indexWhere((project) => project.id == newProject.id);
+    projectList[index] = newProject;
 
     await database.update(
-      DatabaseConstants.tableTask,
-      newTask.toMap(),
+      DatabaseConstants.tableProject,
+      newProject.toMap(),
       where: "${DatabaseConstants.columnId} = ?",
-      whereArgs: [newTask.id],
+      whereArgs: [newProject.id],
     );
     notifyListeners();
   }
 
-  Future<void> deleteTask(int targetTaskId) async {
-    final existingTaskIndex =
-        taskList.indexWhere((task) => task.id == targetTaskId);
+  Future<void> deleteProject(int targetProjectId) async {
+    final existingProjectIndex =
+        projectList.indexWhere((project) => project.id == targetProjectId);
 
-    if (existingTaskIndex == -1) {
+    if (existingProjectIndex == -1) {
       return;
     }
 
     await database.delete(
-      DatabaseConstants.tableTask,
+      DatabaseConstants.tableProject,
       where: "${DatabaseConstants.columnId} = ?",
-      whereArgs: [targetTaskId],
+      whereArgs: [targetProjectId],
     );
 
-    _shrinkAndSynchronizeDatabase(existingTaskIndex + 1);
-    taskList.removeAt(existingTaskIndex);
+    _shrinkAndSynchronizeDatabase(existingProjectIndex + 1);
+    projectList.removeAt(existingProjectIndex);
     notifyListeners();
   }
 
   void _shrinkAndSynchronizeDatabase(int startIndex) async {
-    for (var index = startIndex; index < taskList.length; index++) {
-      final task = taskList[index].copyWith(
+    for (var index = startIndex; index < projectList.length; index++) {
+      final project = projectList[index].copyWith(
         id: index - 1,
       );
-      taskList[index] = task;
+      projectList[index] = project;
       await database.update(
-        DatabaseConstants.tableTask,
-        task.toMap(),
+        DatabaseConstants.tableProject,
+        project.toMap(),
         where: "${DatabaseConstants.columnId} = ?",
-        whereArgs: [task.id],
+        whereArgs: [project.id],
       );
     }
   }
