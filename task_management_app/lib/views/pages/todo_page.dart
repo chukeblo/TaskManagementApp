@@ -96,6 +96,7 @@ class TodoPage extends StatelessWidget {
                         context: context,
                         editingTodo: todo,
                         title: todo.title,
+                        tag: todo.tag,
                         memo: todo.memo,
                       );
                     },

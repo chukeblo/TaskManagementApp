@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/models.dart';
-import '../../../providers/providers.dart';
-import '../../../views/views.dart';
+import './../../providers/providers.dart';
+import '../../models/models.dart';
 
-class TaskPage extends StatelessWidget {
-  TaskPage._({Key? key}) : super(key: key);
+class ProjectPage extends StatelessWidget {
+  ProjectPage._({Key? key}) : super(key: key);
 
   static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
-      create: (_context) => TaskPageModel(
-        taskProvider: Provider.of<TaskProvider>(context),
-      ),
-      child: TaskPage._(),
+      create: (_context) => ProjectPageModel(
+          projectProvider: Provider.of<ProjectProvider>(context)),
+      child: ProjectPage._(),
     );
   }
 
-  List<TaskItemData> tasks = [];
+  List<ProjectItemData> projects = [];
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<TaskPageModel>(context);
-    tasks = model.taskList;
+    final model = Provider.of<ProjectPageModel>(context, listen: false);
+    projects = model.projectList;
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text("TASK"),
+          child: Text("PROJECT"),
         ),
         actions: <Widget>[
           IconButton(
@@ -39,11 +37,11 @@ class TaskPage extends StatelessWidget {
       ),
       body: ListView.builder(
         shrinkWrap: true,
-        itemCount: tasks.length,
+        itemCount: projects.length,
         itemBuilder: (context, index) {
-          final task = tasks[index];
+          final project = projects[index];
           return Card(
-            color: TodoItemData.getCompletionStatus(task.isCompleted)
+            color: ProjectItemData.getCompletionStatus(project.isCompleted)
                 ? Colors.greenAccent
                 : null,
             child: ListTile(
@@ -51,14 +49,14 @@ class TaskPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    task.title,
+                    project.title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
                   Text(
-                    "${task.format(task.createdAt)} ~ ${task.format(task.completedAt)}",
+                    "${project.format(project.createdAt)} ~ ${project.format(project.completedAt)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 14,
@@ -68,9 +66,9 @@ class TaskPage extends StatelessWidget {
                 ],
               ),
               onTap: () {
-                model.toggleTaskCompletion(task);
+                model.toggleProjectCompletion(project);
               },
-              leading: TodoItemData.getCompletionStatus(task.isCompleted)
+              leading: ProjectItemData.getCompletionStatus(project.isCompleted)
                   ? const Icon(
                       Icons.done,
                       color: Colors.green,
@@ -84,7 +82,7 @@ class TaskPage extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     onPressed: () {
-                      model.deleteTask(index);
+                      model.deleteProject(index);
                     },
                   ),
                   IconButton(
@@ -93,12 +91,12 @@ class TaskPage extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     onPressed: () {
-                      _showTaskEditDialog(
+                      _showProjectEditDialog(
                         context: context,
-                        editingTask: task,
-                        title: task.title,
-                        tag: task.tag,
-                        memo: task.memo,
+                        editingProject: project,
+                        title: project.title,
+                        tag: project.tag,
+                        memo: project.memo,
                       );
                     },
                   ),
@@ -110,41 +108,22 @@ class TaskPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showTaskAddDialog(context: context);
+          _showProjectAddDialog(context: context);
         },
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  void _showTaskAddDialog({
+  void _showProjectAddDialog({
     required BuildContext context,
-  }) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return TaskAddDialog.withDependencies(context: context);
-      },
-    );
-  }
+  }) {}
 
-  void _showTaskEditDialog({
+  void _showProjectEditDialog({
     required BuildContext context,
-    required TaskItemData editingTask,
-    String title = "",
+    required ProjectItemData editingProject,
+    required String title,
     String tag = "",
     String memo = "",
-  }) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return TaskEditDialog.withDependencies(
-            context: context,
-            editingTask: editingTask,
-            title: title,
-            tag: tag,
-            memo: memo,
-          );
-        });
-  }
+  }) {}
 }
