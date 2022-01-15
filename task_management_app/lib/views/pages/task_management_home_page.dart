@@ -30,6 +30,7 @@ class TaskManagementHomePage extends StatelessWidget {
         title: const Center(
           child: Text("Home"),
         ),
+        backgroundColor: Colors.grey[800],
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -40,9 +41,51 @@ class TaskManagementHomePage extends StatelessWidget {
                 }),
               );
             },
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.home),
           )
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: const Center(
+                child: Text(
+                  "Menu",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.grey[800],
+              ),
+            ),
+            ListTile(
+              title: const Text("TODO"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return TodoPage.withDependencies(context: context);
+                  }),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text("TASK"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return TaskPage.withDependencies(context: context);
+                  }),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
