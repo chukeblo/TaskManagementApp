@@ -32,7 +32,7 @@ class TodoEditDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<TodoEditDialogModel>(context, listen: false);
+    final model = Provider.of<TodoEditDialogModel>(context);
     return SimpleDialog(
       children: <Widget>[
         SimpleDialogOption(

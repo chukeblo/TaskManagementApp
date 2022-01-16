@@ -21,7 +21,7 @@ class TaskEditDialog extends StatelessWidget {
   }) {
     return ChangeNotifierProvider(
       create: (_context) => TaskEditDialogModel(
-        taskProvider: Provider.of<TaskProvider>(context, listen: false),
+        taskProvider: Provider.of<TaskProvider>(context),
         title: title,
         tag: tag,
         memo: memo,

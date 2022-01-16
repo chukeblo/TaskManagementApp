@@ -20,7 +20,7 @@ class ProjectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<ProjectPageModel>(context, listen: false);
+    final model = Provider.of<ProjectPageModel>(context);
     projects = model.projectList;
     return Scaffold(
       appBar: AppBar(

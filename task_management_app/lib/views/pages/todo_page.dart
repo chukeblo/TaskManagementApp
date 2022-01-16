@@ -20,7 +20,7 @@ class TodoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<TodoPageModel>(context, listen: false);
+    final model = Provider.of<TodoPageModel>(context);
     todos = model.todoList;
     return Scaffold(
       appBar: AppBar(

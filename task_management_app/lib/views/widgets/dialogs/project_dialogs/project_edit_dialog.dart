@@ -20,8 +20,8 @@ class ProjectEditDialog extends StatelessWidget {
     String memo = "",
   }) {
     return ChangeNotifierProvider(
-      create: (_context) => TaskEditDialogModel(
-        taskProvider: Provider.of<TaskProvider>(context, listen: false),
+      create: (_context) => ProjectEditDialogModel(
+        projectProvider: Provider.of<ProjectProvider>(context),
         title: title,
         tag: tag,
         memo: memo,
