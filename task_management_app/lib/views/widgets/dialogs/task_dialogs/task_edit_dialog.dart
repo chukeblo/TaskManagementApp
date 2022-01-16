@@ -15,16 +15,13 @@ class TaskEditDialog extends StatelessWidget {
   static Widget withDependencies({
     required BuildContext context,
     required TaskItemData editingTask,
-    required String title,
-    String tag = "",
-    String memo = "",
   }) {
     return ChangeNotifierProvider(
       create: (_context) => TaskEditDialogModel(
         taskProvider: Provider.of<TaskProvider>(context),
-        title: title,
-        tag: tag,
-        memo: memo,
+        title: editingTask.title,
+        tag: editingTask.tag,
+        memo: editingTask.memo,
       ),
       child: TaskEditDialog._(editingTask: editingTask),
     );

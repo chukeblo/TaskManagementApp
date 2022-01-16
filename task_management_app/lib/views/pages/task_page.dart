@@ -96,9 +96,6 @@ class TaskPage extends StatelessWidget {
                       _showTaskEditDialog(
                         context: context,
                         editingTask: task,
-                        title: task.title,
-                        tag: task.tag,
-                        memo: task.memo,
                       );
                     },
                   ),
@@ -131,9 +128,6 @@ class TaskPage extends StatelessWidget {
   void _showTaskEditDialog({
     required BuildContext context,
     required TaskItemData editingTask,
-    String title = "",
-    String tag = "",
-    String memo = "",
   }) {
     showDialog(
         context: context,
@@ -141,9 +135,6 @@ class TaskPage extends StatelessWidget {
           return TaskEditDialog.withDependencies(
             context: context,
             editingTask: editingTask,
-            title: title,
-            tag: tag,
-            memo: memo,
           );
         });
   }
