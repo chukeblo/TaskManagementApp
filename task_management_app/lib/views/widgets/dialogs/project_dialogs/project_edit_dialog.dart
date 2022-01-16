@@ -15,16 +15,13 @@ class ProjectEditDialog extends StatelessWidget {
   static Widget withDependencies({
     required BuildContext context,
     required ProjectItemData editingProject,
-    required String title,
-    String tag = "",
-    String memo = "",
   }) {
     return ChangeNotifierProvider(
       create: (_context) => ProjectEditDialogModel(
         projectProvider: Provider.of<ProjectProvider>(context),
-        title: title,
-        tag: tag,
-        memo: memo,
+        title: editingProject.title,
+        tag: editingProject.tag,
+        memo: editingProject.memo,
       ),
       child: ProjectEditDialog._(editingProject: editingProject),
     );

@@ -95,9 +95,6 @@ class TodoPage extends StatelessWidget {
                       _showTodoEditDialog(
                         context: context,
                         editingTodo: todo,
-                        title: todo.title,
-                        tag: todo.tag,
-                        memo: todo.memo,
                       );
                     },
                   ),
@@ -129,9 +126,6 @@ class TodoPage extends StatelessWidget {
   void _showTodoEditDialog({
     required BuildContext context,
     required TodoItemData editingTodo,
-    required String title,
-    String tag = "",
-    String memo = "",
   }) {
     showDialog(
         context: context,
@@ -139,9 +133,6 @@ class TodoPage extends StatelessWidget {
           return TodoEditDialog.withDependencies(
             context: context,
             editingTodo: editingTodo,
-            title: title,
-            tag: tag,
-            memo: memo,
           );
         });
   }

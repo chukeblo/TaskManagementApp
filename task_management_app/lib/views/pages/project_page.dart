@@ -95,9 +95,6 @@ class ProjectPage extends StatelessWidget {
                       _showProjectEditDialog(
                         context: context,
                         editingProject: project,
-                        title: project.title,
-                        tag: project.tag,
-                        memo: project.memo,
                       );
                     },
                   ),
@@ -130,9 +127,6 @@ class ProjectPage extends StatelessWidget {
   void _showProjectEditDialog({
     required BuildContext context,
     required ProjectItemData editingProject,
-    required String title,
-    String tag = "",
-    String memo = "",
   }) {
     showDialog(
         context: context,
@@ -140,9 +134,6 @@ class ProjectPage extends StatelessWidget {
           return ProjectEditDialog.withDependencies(
             context: context,
             editingProject: editingProject,
-            title: title,
-            tag: tag,
-            memo: memo,
           );
         });
   }

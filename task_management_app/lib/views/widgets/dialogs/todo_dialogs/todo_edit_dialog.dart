@@ -15,16 +15,13 @@ class TodoEditDialog extends StatelessWidget {
   static Widget withDependencies({
     required BuildContext context,
     required TodoItemData editingTodo,
-    required String title,
-    String tag = "",
-    String memo = "",
   }) {
     return ChangeNotifierProvider(
       create: (_context) => TodoEditDialogModel(
         todoProvider: Provider.of<TodoProvider>(context, listen: false),
-        title: title,
-        tag: tag,
-        memo: memo,
+        title: editingTodo.title,
+        tag: editingTodo.tag,
+        memo: editingTodo.memo,
       ),
       child: TodoEditDialog._(editingTodo: editingTodo),
     );
