@@ -2,37 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../models/models.dart';
-import '../../../../providers/providers.dart';
 
-class TaskEditDialog extends StatelessWidget {
-  const TaskEditDialog._({
+class ProjectAddDialog extends StatelessWidget {
+  const ProjectAddDialog._({
     Key? key,
-    required this.editingTask,
   }) : super(key: key);
 
-  final TaskItemData editingTask;
-
-  static Widget withDependencies({
-    required BuildContext context,
-    required TaskItemData editingTask,
-    required String title,
-    String tag = "",
-    String memo = "",
-  }) {
+  static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
-      create: (_context) => TaskEditDialogModel(
-        taskProvider: Provider.of<TaskProvider>(context),
-        title: title,
-        tag: tag,
-        memo: memo,
+      create: (_context) => ProjectAddDialogModel(
+        projectProvider: Provider.of(context),
       ),
-      child: TaskEditDialog._(editingTask: editingTask),
+      child: const ProjectAddDialog._(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<TaskEditDialogModel>(context, listen: false);
+    final model = Provider.of<ProjectAddDialogModel>(context);
     return SimpleDialog(
       children: <Widget>[
         SimpleDialogOption(
@@ -85,10 +72,10 @@ class TaskEditDialog extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      model.addProject();
                       Navigator.of(context).pop();
-                      model.editTask(editingTask);
                     },
-                    child: const Text("EDIT"),
+                    child: const Text("ADD"),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -103,10 +90,9 @@ class TaskEditDialog extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: const Text("CANCEL"),
-                  ),
+                  )
                 ],
               ),
-              const SizedBox(width: 10),
             ],
           ),
         ),

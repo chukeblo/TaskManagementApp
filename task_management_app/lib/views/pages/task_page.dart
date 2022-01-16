@@ -97,6 +97,7 @@ class TaskPage extends StatelessWidget {
                         context: context,
                         editingTask: task,
                         title: task.title,
+                        tag: task.tag,
                         memo: task.memo,
                       );
                     },
@@ -131,6 +132,7 @@ class TaskPage extends StatelessWidget {
     required BuildContext context,
     required TaskItemData editingTask,
     String title = "",
+    String tag = "",
     String memo = "",
   }) {
     showDialog(
@@ -140,6 +142,7 @@ class TaskPage extends StatelessWidget {
             context: context,
             editingTask: editingTask,
             title: title,
+            tag: tag,
             memo: memo,
           );
         });

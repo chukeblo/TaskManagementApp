@@ -84,6 +84,17 @@ class TaskManagementHomePage extends StatelessWidget {
                 );
               },
             ),
+            ListTile(
+              title: const Text("PROJECT"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return ProjectPage.withDependencies(context: context);
+                  }),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -111,6 +122,18 @@ class TaskManagementHomePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (BuildContext context) {
                     return TaskPage.withDependencies(context: context);
+                  }),
+                );
+              },
+            ),
+            ElevatedButton.icon(
+              label: const Text("PROJECT"),
+              icon: const Icon(Icons.insert_chart_outlined),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return ProjectPage.withDependencies(context: context);
                   }),
                 );
               },

@@ -4,35 +4,35 @@ import 'package:provider/provider.dart';
 import '../../../../models/models.dart';
 import '../../../../providers/providers.dart';
 
-class TaskEditDialog extends StatelessWidget {
-  const TaskEditDialog._({
+class ProjectEditDialog extends StatelessWidget {
+  const ProjectEditDialog._({
     Key? key,
-    required this.editingTask,
+    required this.editingProject,
   }) : super(key: key);
 
-  final TaskItemData editingTask;
+  final ProjectItemData editingProject;
 
   static Widget withDependencies({
     required BuildContext context,
-    required TaskItemData editingTask,
+    required ProjectItemData editingProject,
     required String title,
     String tag = "",
     String memo = "",
   }) {
     return ChangeNotifierProvider(
-      create: (_context) => TaskEditDialogModel(
-        taskProvider: Provider.of<TaskProvider>(context),
+      create: (_context) => ProjectEditDialogModel(
+        projectProvider: Provider.of<ProjectProvider>(context),
         title: title,
         tag: tag,
         memo: memo,
       ),
-      child: TaskEditDialog._(editingTask: editingTask),
+      child: ProjectEditDialog._(editingProject: editingProject),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<TaskEditDialogModel>(context, listen: false);
+    final model = Provider.of<ProjectEditDialogModel>(context, listen: false);
     return SimpleDialog(
       children: <Widget>[
         SimpleDialogOption(
@@ -86,7 +86,7 @@ class TaskEditDialog extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      model.editTask(editingTask);
+                      model.editProject(editingProject);
                     },
                     child: const Text("EDIT"),
                   ),

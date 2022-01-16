@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_management_app/views/views.dart';
 
 import './../../providers/providers.dart';
 import '../../models/models.dart';
-import '../views.dart';
 
-class TodoPage extends StatelessWidget {
-  TodoPage._({Key? key}) : super(key: key);
+class ProjectPage extends StatelessWidget {
+  ProjectPage._({Key? key}) : super(key: key);
 
   static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
-      create: (_context) =>
-          TodoPageModel(todoProvider: Provider.of<TodoProvider>(context)),
-      child: TodoPage._(),
+      create: (_context) => ProjectPageModel(
+          projectProvider: Provider.of<ProjectProvider>(context)),
+      child: ProjectPage._(),
     );
   }
 
-  List<TodoItemData> todos = [];
+  List<ProjectItemData> projects = [];
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<TodoPageModel>(context);
-    todos = model.todoList;
+    final model = Provider.of<ProjectPageModel>(context);
+    projects = model.projectList;
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text("TODO"),
+          child: Text("PROJECT"),
         ),
         actions: <Widget>[
           IconButton(
@@ -38,11 +38,11 @@ class TodoPage extends StatelessWidget {
       ),
       body: ListView.builder(
         shrinkWrap: true,
-        itemCount: todos.length,
+        itemCount: projects.length,
         itemBuilder: (context, index) {
-          final todo = todos[index];
+          final project = projects[index];
           return Card(
-            color: TodoItemData.getCompletionStatus(todo.isCompleted)
+            color: ProjectItemData.getCompletionStatus(project.isCompleted)
                 ? Colors.greenAccent
                 : null,
             child: ListTile(
@@ -50,14 +50,14 @@ class TodoPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    todo.title,
+                    project.title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
                   Text(
-                    "${todo.format(todo.createdAt)} ~ ${todo.format(todo.completedAt)}",
+                    "${project.format(project.createdAt)} ~ ${project.format(project.completedAt)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 14,
@@ -67,9 +67,9 @@ class TodoPage extends StatelessWidget {
                 ],
               ),
               onTap: () {
-                model.toggleTodoCompletion(todo);
+                model.toggleProjectCompletion(project);
               },
-              leading: TodoItemData.getCompletionStatus(todo.isCompleted)
+              leading: ProjectItemData.getCompletionStatus(project.isCompleted)
                   ? const Icon(
                       Icons.done,
                       color: Colors.green,
@@ -83,7 +83,7 @@ class TodoPage extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     onPressed: () {
-                      model.deleteTodo(index);
+                      model.deleteProject(index);
                     },
                   ),
                   IconButton(
@@ -92,12 +92,12 @@ class TodoPage extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     onPressed: () {
-                      _showTodoEditDialog(
+                      _showProjectEditDialog(
                         context: context,
-                        editingTodo: todo,
-                        title: todo.title,
-                        tag: todo.tag,
-                        memo: todo.memo,
+                        editingProject: project,
+                        title: project.title,
+                        tag: project.tag,
+                        memo: project.memo,
                       );
                     },
                   ),
@@ -109,36 +109,37 @@ class TodoPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showTodoAddDialog(context: context);
+          _showProjectAddDialog(context: context);
         },
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  void _showTodoAddDialog({
+  void _showProjectAddDialog({
     required BuildContext context,
   }) {
     showDialog(
-        context: context,
-        builder: (context) {
-          return TodoAddDialog.withDependencies(context: context);
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return ProjectAddDialog.withDependencies(context: context);
+      },
+    );
   }
 
-  void _showTodoEditDialog({
+  void _showProjectEditDialog({
     required BuildContext context,
-    required TodoItemData editingTodo,
+    required ProjectItemData editingProject,
     required String title,
     String tag = "",
     String memo = "",
   }) {
     showDialog(
         context: context,
-        builder: (context) {
-          return TodoEditDialog.withDependencies(
+        builder: (BuildContext context) {
+          return ProjectEditDialog.withDependencies(
             context: context,
-            editingTodo: editingTodo,
+            editingProject: editingProject,
             title: title,
             tag: tag,
             memo: memo,
