@@ -23,6 +23,7 @@ class ProjectEditDialogModel extends ChangeNotifier {
   void editProject(ProjectItemData editingProject) {
     final updatedProject = editingProject.copyWith(
       title: titleController.text,
+      tag: tagController.text,
       memo: memoController.text,
     );
     projectProvider.updateProject(updatedProject);

@@ -23,6 +23,7 @@ class TodoEditDialogModel extends ChangeNotifier {
   void editTodo(TodoItemData editingTodo) {
     final updatedTodo = editingTodo.copyWith(
       title: titleController.text,
+      tag: tagController.text,
       memo: memoController.text,
     );
     todoProvider.updateTodo(updatedTodo);

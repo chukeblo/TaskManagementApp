@@ -23,6 +23,7 @@ class TaskEditDialogModel extends ChangeNotifier {
   void editTask(TaskItemData editingTask) {
     final updatedTask = editingTask.copyWith(
       title: titleController.text,
+      tag: tagController.text,
       memo: memoController.text,
     );
     taskProvider.updateTask(updatedTask);
