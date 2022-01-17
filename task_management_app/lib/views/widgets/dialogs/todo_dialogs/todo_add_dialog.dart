@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../models/models.dart';
+import '../../../../providers/providers.dart';
 
 class TodoAddDialog extends StatelessWidget {
   const TodoAddDialog._({
@@ -11,7 +12,7 @@ class TodoAddDialog extends StatelessWidget {
   static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
       create: (_context) => TodoAddDialogModel(
-        todoProvider: Provider.of(context),
+        todoProvider: Provider.of<TodoProvider>(context),
       ),
       child: const TodoAddDialog._(),
     );

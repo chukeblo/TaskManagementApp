@@ -15,18 +15,18 @@ class TodoEditDialogModel extends ChangeNotifier {
     memoController.text = memo;
   }
 
-  final TodoProvider todoProvider;
+  final ManagementDataProvider todoProvider;
   final titleController = TextEditingController();
   final tagController = TextEditingController();
   final memoController = TextEditingController();
 
-  void editTodo(TodoItemData editingTodo) {
+  void editTodo(ManagementItemData editingTodo) {
     final updatedTodo = editingTodo.copyWith(
       title: titleController.text,
       tag: tagController.text,
       memo: memoController.text,
     );
-    todoProvider.updateTodo(updatedTodo);
+    todoProvider.updateManagementItemData(updatedTodo);
     notifyListeners();
   }
 }

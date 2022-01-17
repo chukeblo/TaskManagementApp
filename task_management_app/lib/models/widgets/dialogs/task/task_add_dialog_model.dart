@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../models/models.dart';
 import '../../../../providers/providers.dart';
+import '../../../../utilities/utilities.dart';
 
 class TaskAddDialogModel extends ChangeNotifier {
   TaskAddDialogModel({
@@ -22,7 +23,7 @@ class TaskAddDialogModel extends ChangeNotifier {
       id: taskProvider.taskList.length,
       title: titleController.text,
       tag: tagController.text,
-      isCompleted: TodoItemData.intFalse,
+      isCompleted: intFalse,
       createdAt: DateTime.now().toIso8601String(),
       memo: memoController.text,
     );

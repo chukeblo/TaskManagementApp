@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './../../providers/providers.dart';
 import '../../models/models.dart';
+import '../../providers/providers.dart';
+import '../../utilities/utilities.dart';
 import '../views.dart';
 
 class TodoPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class TodoPage extends StatelessWidget {
     );
   }
 
-  List<TodoItemData> todos = [];
+  List<ManagementItemData> todos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class TodoPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final todo = todos[index];
           return Card(
-            color: TodoItemData.getCompletionStatus(todo.isCompleted)
+            color: getCompletionStatus(todo.isCompleted)
                 ? Colors.greenAccent
                 : null,
             child: ListTile(
@@ -69,7 +70,7 @@ class TodoPage extends StatelessWidget {
               onTap: () {
                 model.toggleTodoCompletion(todo);
               },
-              leading: TodoItemData.getCompletionStatus(todo.isCompleted)
+              leading: getCompletionStatus(todo.isCompleted)
                   ? const Icon(
                       Icons.done,
                       color: Colors.green,
@@ -125,7 +126,7 @@ class TodoPage extends StatelessWidget {
 
   void _showTodoEditDialog({
     required BuildContext context,
-    required TodoItemData editingTodo,
+    required ManagementItemData editingTodo,
   }) {
     showDialog(
         context: context,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/models.dart';
-import '../../../providers/providers.dart';
-import '../../../views/views.dart';
+import '../../models/models.dart';
+import '../../providers/providers.dart';
+import '../../utilities/utilities.dart';
+import '../../views/views.dart';
 
 class TaskPage extends StatelessWidget {
   TaskPage._({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class TaskPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final task = tasks[index];
           return Card(
-            color: TodoItemData.getCompletionStatus(task.isCompleted)
+            color: getCompletionStatus(task.isCompleted)
                 ? Colors.greenAccent
                 : null,
             child: ListTile(
@@ -70,7 +71,7 @@ class TaskPage extends StatelessWidget {
               onTap: () {
                 model.toggleTaskCompletion(task);
               },
-              leading: TodoItemData.getCompletionStatus(task.isCompleted)
+              leading: getCompletionStatus(task.isCompleted)
                   ? const Icon(
                       Icons.done,
                       color: Colors.green,

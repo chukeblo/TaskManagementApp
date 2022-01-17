@@ -1,26 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/models.dart';
+import '../providers/providers.dart';
 import '../utilities/utilities.dart';
 
-class TodoProvider with ChangeNotifier {
+class TodoProvider extends ManagementDataProvider {
   TodoProvider({
-    required this.database,
-  }) {
+    required Database database,
+  }) : super(database: database) {
     initialize();
   }
 
-  final Database database;
-  List<TodoItemData> todoList = [];
-
-  Future<void> initialize() async {
-    todoList = await getTodoList(database);
-  }
-
-  Future<List<TodoItemData>> getTodoList(
-    Database database,
-  ) async {
+  @override
+  Future<List<ManagementItemData>> getManagementDataList(
+      Database database) async {
     final List<Map<String, dynamic>> maps =
         await database.query(DatabaseConstants.tableTodo);
     return List.generate(maps.length, (i) {
@@ -36,32 +29,35 @@ class TodoProvider with ChangeNotifier {
     });
   }
 
-  Future<void> addTodo(TodoItemData todo) async {
-    todoList.add(todo);
+  @override
+  Future<void> addManagementItemData(ManagementItemData data) async {
+    managementDataList.add(data);
     await database.insert(
       DatabaseConstants.tableTodo,
-      todo.toMap(),
+      data.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     notifyListeners();
   }
 
-  Future<void> updateTodo(TodoItemData newTodo) async {
-    final index = todoList.indexWhere((todo) => todo.id == newTodo.id);
-    todoList[index] = newTodo;
+  @override
+  Future<void> updateManagementItemData(ManagementItemData data) async {
+    final index = managementDataList.indexWhere((todo) => todo.id == data.id);
+    managementDataList[index] = data;
 
     await database.update(
       DatabaseConstants.tableTodo,
-      newTodo.toMap(),
+      data.toMap(),
       where: "${DatabaseConstants.columnId} = ?",
-      whereArgs: [newTodo.id],
+      whereArgs: [data.id],
     );
     notifyListeners();
   }
 
-  Future<void> deleteTodo(int targetTodoId) async {
+  @override
+  Future<void> deleteManagementItemData(int id) async {
     final existingTodoIndex =
-        todoList.indexWhere((todo) => todo.id == targetTodoId);
+        managementDataList.indexWhere((todo) => todo.id == id);
 
     if (existingTodoIndex == -1) {
       return;
@@ -70,20 +66,20 @@ class TodoProvider with ChangeNotifier {
     await database.delete(
       DatabaseConstants.tableTodo,
       where: "${DatabaseConstants.columnId} = ?",
-      whereArgs: [targetTodoId],
+      whereArgs: [id],
     );
 
     _shrinkAndSynchronizeDatabase(existingTodoIndex + 1);
-    todoList.removeAt(existingTodoIndex);
+    managementDataList.removeAt(existingTodoIndex);
     notifyListeners();
   }
 
   void _shrinkAndSynchronizeDatabase(int startIndex) async {
-    for (var index = startIndex; index < todoList.length; index++) {
-      final todo = todoList[index].copyWith(
+    for (var index = startIndex; index < managementDataList.length; index++) {
+      final todo = managementDataList[index].copyWith(
         id: index - 1,
       );
-      todoList[index] = todo;
+      managementDataList[index] = todo;
       await database.update(
         DatabaseConstants.tableTodo,
         todo.toMap(),
