@@ -1,5 +1,4 @@
-import 'package:task_management_app/models/data/data.dart';
-
+import '../../models/data/data.dart';
 import '../../utilities/utilities.dart';
 
 class TodoItemData extends ManagementItemData {

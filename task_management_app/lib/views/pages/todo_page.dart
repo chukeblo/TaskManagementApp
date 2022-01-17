@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../models/models.dart';
 import '../../providers/providers.dart';
 import '../../utilities/utilities.dart';
-import '../views.dart';
+import '../../views/views.dart';
 
 class TodoPage extends StatelessWidget {
   TodoPage._({Key? key}) : super(key: key);

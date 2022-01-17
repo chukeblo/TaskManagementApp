@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management_app/views/views.dart';
 
 import '../../models/models.dart';
 import '../../providers/providers.dart';
 import '../../utilities/utilities.dart';
+import '../../views/views.dart';
 
 class ProjectPage extends StatelessWidget {
   ProjectPage._({Key? key}) : super(key: key);
