@@ -10,11 +10,11 @@ class ProjectEditDialog extends StatelessWidget {
     required this.editingProject,
   }) : super(key: key);
 
-  final ProjectItemData editingProject;
+  final ManagementItemData editingProject;
 
   static Widget withDependencies({
     required BuildContext context,
-    required ProjectItemData editingProject,
+    required ManagementItemData editingProject,
   }) {
     return ChangeNotifierProvider(
       create: (_context) => ProjectEditDialogModel(

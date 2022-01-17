@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../models/models.dart';
+import '../../../../providers/providers.dart';
 
 class ProjectAddDialog extends StatelessWidget {
   const ProjectAddDialog._({
@@ -11,7 +12,7 @@ class ProjectAddDialog extends StatelessWidget {
   static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
       create: (_context) => ProjectAddDialogModel(
-        projectProvider: Provider.of(context),
+        projectProvider: Provider.of<ManagementDataProvider>(context),
       ),
       child: const ProjectAddDialog._(),
     );

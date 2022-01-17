@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_management_app/views/views.dart';
 
-import './../../providers/providers.dart';
 import '../../models/models.dart';
+import '../../providers/providers.dart';
+import '../../utilities/utilities.dart';
 
 class ProjectPage extends StatelessWidget {
   ProjectPage._({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class ProjectPage extends StatelessWidget {
     );
   }
 
-  List<ProjectItemData> projects = [];
+  List<ManagementItemData> projects = [];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class ProjectPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final project = projects[index];
           return Card(
-            color: ProjectItemData.getCompletionStatus(project.isCompleted)
+            color: getCompletionStatus(project.isCompleted)
                 ? Colors.greenAccent
                 : null,
             child: ListTile(
@@ -69,7 +70,7 @@ class ProjectPage extends StatelessWidget {
               onTap: () {
                 model.toggleProjectCompletion(project);
               },
-              leading: ProjectItemData.getCompletionStatus(project.isCompleted)
+              leading: getCompletionStatus(project.isCompleted)
                   ? const Icon(
                       Icons.done,
                       color: Colors.green,
@@ -126,7 +127,7 @@ class ProjectPage extends StatelessWidget {
 
   void _showProjectEditDialog({
     required BuildContext context,
-    required ProjectItemData editingProject,
+    required ManagementItemData editingProject,
   }) {
     showDialog(
         context: context,

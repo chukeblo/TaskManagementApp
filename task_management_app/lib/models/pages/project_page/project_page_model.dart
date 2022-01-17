@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 
 import '../../../models/models.dart';
 import '../../../providers/providers.dart';
+import '../../../utilities/utilities.dart';
 
 class ProjectPageModel extends ChangeNotifier {
   ProjectPageModel({
     required this.projectProvider,
   });
 
-  final ProjectProvider projectProvider;
+  final ManagementDataProvider projectProvider;
 
-  List<ProjectItemData> get projectList => projectProvider.projectList;
+  List<ManagementItemData> get projectList =>
+      projectProvider.managementDataList;
 
   void deleteProject(int id) {
-    projectProvider.deleteProject(id);
+    projectProvider.deleteManagementItemData(id);
     notifyListeners();
   }
 
-  void toggleProjectCompletion(ProjectItemData togglingCompletionProject) {
-    final isCompleted = ProjectItemData.reverseCompletion(
-        togglingCompletionProject.isCompleted);
+  void toggleProjectCompletion(ManagementItemData togglingCompletionProject) {
+    final isCompleted =
+        reverseCompletion(togglingCompletionProject.isCompleted);
     final createdAt = togglingCompletionProject.createdAt;
-    final completedAt = ProjectItemData.getCompletionStatus(isCompleted)
+    final completedAt = getCompletionStatus(isCompleted)
         ? DateTime.now().toIso8601String()
         : "";
     final updatedProject = togglingCompletionProject.copyWith(
@@ -29,7 +31,7 @@ class ProjectPageModel extends ChangeNotifier {
       createdAt: createdAt,
       completedAt: completedAt,
     );
-    projectProvider.updateProject(updatedProject);
+    projectProvider.updateManagementItemData(updatedProject);
     notifyListeners();
   }
 }

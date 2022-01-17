@@ -15,18 +15,18 @@ class ProjectEditDialogModel extends ChangeNotifier {
     memoController.text = memo;
   }
 
-  final ProjectProvider projectProvider;
+  final ManagementDataProvider projectProvider;
   final titleController = TextEditingController();
   final tagController = TextEditingController();
   final memoController = TextEditingController();
 
-  void editProject(ProjectItemData editingProject) {
+  void editProject(ManagementItemData editingProject) {
     final updatedProject = editingProject.copyWith(
       title: titleController.text,
       tag: tagController.text,
       memo: memoController.text,
     );
-    projectProvider.updateProject(updatedProject);
+    projectProvider.updateManagementItemData(updatedProject);
     notifyListeners();
   }
 }
