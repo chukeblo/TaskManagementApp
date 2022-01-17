@@ -1,24 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/models.dart';
+import '../providers/providers.dart';
 import '../utilities/utilities.dart';
 
-class ProjectProvider extends ChangeNotifier {
+class ProjectProvider extends ManagementDataProvider {
   ProjectProvider({
-    required this.database,
-  }) {
+    required Database database,
+  }) : super(database: database) {
     initialize();
   }
 
-  final Database database;
-  List<ProjectItemData> projectList = [];
-
-  Future<void> initialize() async {
-    projectList = await getProjectList(database);
-  }
-
-  Future<List<ProjectItemData>> getProjectList(
+  @override
+  Future<List<ManagementItemData>> getManagementDataList(
     Database database,
   ) async {
     final List<Map<String, dynamic>> maps =
@@ -36,33 +30,36 @@ class ProjectProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> addProject(ProjectItemData project) async {
-    projectList.add(project);
+  @override
+  Future<void> addManagementItemData(ManagementItemData data) async {
+    managementDataList.add(data);
     await database.insert(
       DatabaseConstants.tableProject,
-      project.toMap(),
+      data.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     notifyListeners();
   }
 
-  Future<void> updateProject(ProjectItemData newProject) async {
+  @override
+  Future<void> updateManagementItemData(ManagementItemData data) async {
     final index =
-        projectList.indexWhere((project) => project.id == newProject.id);
-    projectList[index] = newProject;
+        managementDataList.indexWhere((project) => project.id == data.id);
+    managementDataList[index] = data;
 
     await database.update(
       DatabaseConstants.tableProject,
-      newProject.toMap(),
+      data.toMap(),
       where: "${DatabaseConstants.columnId} = ?",
-      whereArgs: [newProject.id],
+      whereArgs: [data.id],
     );
     notifyListeners();
   }
 
-  Future<void> deleteProject(int targetProjectId) async {
+  @override
+  Future<void> deleteManagementItemData(int id) async {
     final existingProjectIndex =
-        projectList.indexWhere((project) => project.id == targetProjectId);
+        managementDataList.indexWhere((project) => project.id == id);
 
     if (existingProjectIndex == -1) {
       return;
@@ -71,20 +68,20 @@ class ProjectProvider extends ChangeNotifier {
     await database.delete(
       DatabaseConstants.tableProject,
       where: "${DatabaseConstants.columnId} = ?",
-      whereArgs: [targetProjectId],
+      whereArgs: [id],
     );
 
     _shrinkAndSynchronizeDatabase(existingProjectIndex + 1);
-    projectList.removeAt(existingProjectIndex);
+    managementDataList.removeAt(existingProjectIndex);
     notifyListeners();
   }
 
   void _shrinkAndSynchronizeDatabase(int startIndex) async {
-    for (var index = startIndex; index < projectList.length; index++) {
-      final project = projectList[index].copyWith(
+    for (var index = startIndex; index < managementDataList.length; index++) {
+      final project = managementDataList[index].copyWith(
         id: index - 1,
       );
-      projectList[index] = project;
+      managementDataList[index] = project;
       await database.update(
         DatabaseConstants.tableProject,
         project.toMap(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../models/models.dart';
+import '../../../../providers/providers.dart';
 
 class TaskAddDialog extends StatelessWidget {
   const TaskAddDialog._({
@@ -11,7 +12,7 @@ class TaskAddDialog extends StatelessWidget {
   static Widget withDependencies({required BuildContext context}) {
     return ChangeNotifierProvider(
       create: (_context) => TaskAddDialogModel(
-        taskProvider: Provider.of(context),
+        taskProvider: Provider.of<TaskProvider>(context),
       ),
       child: const TaskAddDialog._(),
     );

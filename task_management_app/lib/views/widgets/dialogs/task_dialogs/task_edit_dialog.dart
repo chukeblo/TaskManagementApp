@@ -10,11 +10,11 @@ class TaskEditDialog extends StatelessWidget {
     required this.editingTask,
   }) : super(key: key);
 
-  final TaskItemData editingTask;
+  final ManagementItemData editingTask;
 
   static Widget withDependencies({
     required BuildContext context,
-    required TaskItemData editingTask,
+    required ManagementItemData editingTask,
   }) {
     return ChangeNotifierProvider(
       create: (_context) => TaskEditDialogModel(

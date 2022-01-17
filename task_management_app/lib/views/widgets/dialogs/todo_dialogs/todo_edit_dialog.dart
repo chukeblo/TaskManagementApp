@@ -10,11 +10,11 @@ class TodoEditDialog extends StatelessWidget {
     required this.editingTodo,
   }) : super(key: key);
 
-  final TodoItemData editingTodo;
+  final ManagementItemData editingTodo;
 
   static Widget withDependencies({
     required BuildContext context,
-    required TodoItemData editingTodo,
+    required ManagementItemData editingTodo,
   }) {
     return ChangeNotifierProvider(
       create: (_context) => TodoEditDialogModel(

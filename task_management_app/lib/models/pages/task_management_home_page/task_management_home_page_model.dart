@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../providers/providers.dart';
+import '../../../utilities/utilities.dart';
 import '../../models.dart';
 
 class TaskManagementHomePageModel extends ChangeNotifier {
@@ -11,22 +12,21 @@ class TaskManagementHomePageModel extends ChangeNotifier {
     memoController.text = "";
   }
 
-  final TodoProvider todoProvider;
+  final ManagementDataProvider todoProvider;
   final nameController = TextEditingController();
   final memoController = TextEditingController();
 
-  List<TodoItemData> get todoList => todoProvider.todoList;
+  List<ManagementItemData> get todoList => todoProvider.managementDataList;
 
   void deleteTodo(int id) {
-    todoProvider.deleteTodo(id);
+    todoProvider.deleteManagementItemData(id);
     notifyListeners();
   }
 
   void toggleTodoCompletion(TodoItemData togglingCompletionTodo) {
-    final isCompleted =
-        TodoItemData.reverseCompletion(togglingCompletionTodo.isCompleted);
+    final isCompleted = reverseCompletion(togglingCompletionTodo.isCompleted);
     final createdAt = togglingCompletionTodo.createdAt;
-    final completedAt = TodoItemData.getCompletionStatus(isCompleted)
+    final completedAt = getCompletionStatus(isCompleted)
         ? DateTime.now().toIso8601String()
         : "";
     final updatedTodo = togglingCompletionTodo.copyWith(
@@ -34,7 +34,7 @@ class TaskManagementHomePageModel extends ChangeNotifier {
       createdAt: createdAt,
       completedAt: completedAt,
     );
-    todoProvider.updateTodo(updatedTodo);
+    todoProvider.updateManagementItemData(updatedTodo);
     notifyListeners();
   }
 }

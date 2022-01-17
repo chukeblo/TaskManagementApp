@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../models/models.dart';
 import '../../../../providers/providers.dart';
+import '../../../../utilities/utilities.dart';
 
 class TaskAddDialogModel extends ChangeNotifier {
   TaskAddDialogModel({
@@ -12,22 +13,22 @@ class TaskAddDialogModel extends ChangeNotifier {
     memoController.text = "";
   }
 
-  final TaskProvider taskProvider;
+  final ManagementDataProvider taskProvider;
   final titleController = TextEditingController();
   final tagController = TextEditingController();
   final memoController = TextEditingController();
 
   void addTask() {
     final task = TaskItemData(
-      id: taskProvider.taskList.length,
+      id: taskProvider.managementDataList.length,
       title: titleController.text,
       tag: tagController.text,
-      isCompleted: TodoItemData.intFalse,
+      isCompleted: intFalse,
       createdAt: DateTime.now().toIso8601String(),
       memo: memoController.text,
     );
 
-    taskProvider.addTask(task);
+    taskProvider.addManagementItemData(task);
     notifyListeners();
   }
 }

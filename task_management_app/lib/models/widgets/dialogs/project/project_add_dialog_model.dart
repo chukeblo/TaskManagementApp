@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../models/models.dart';
 import '../../../../providers/providers.dart';
+import '../../../../utilities/utilities.dart';
 
 class ProjectAddDialogModel extends ChangeNotifier {
   ProjectAddDialogModel({
@@ -12,22 +13,22 @@ class ProjectAddDialogModel extends ChangeNotifier {
     memoController.text = "";
   }
 
-  final ProjectProvider projectProvider;
+  final ManagementDataProvider projectProvider;
   final titleController = TextEditingController();
   final tagController = TextEditingController();
   final memoController = TextEditingController();
 
   void addProject() {
     final project = ProjectItemData(
-      id: projectProvider.projectList.length,
+      id: projectProvider.managementDataList.length,
       title: titleController.text,
       tag: tagController.text,
-      isCompleted: ProjectItemData.intFalse,
+      isCompleted: intFalse,
       createdAt: DateTime.now().toIso8601String(),
       memo: memoController.text,
     );
 
-    projectProvider.addProject(project);
+    projectProvider.addManagementItemData(project);
     notifyListeners();
   }
 }

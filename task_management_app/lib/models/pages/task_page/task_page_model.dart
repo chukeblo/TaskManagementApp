@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 
 import '../../../models/models.dart';
 import '../../../providers/providers.dart';
+import '../../../utilities/utilities.dart';
 
 class TaskPageModel extends ChangeNotifier {
   TaskPageModel({
     required this.taskProvider,
   });
 
-  final TaskProvider taskProvider;
+  final ManagementDataProvider taskProvider;
 
-  List<TaskItemData> get taskList => taskProvider.taskList;
+  List<ManagementItemData> get taskList => taskProvider.managementDataList;
 
   void deleteTask(int id) {
-    taskProvider.deleteTask(id);
+    taskProvider.deleteManagementItemData(id);
     notifyListeners();
   }
 
-  void toggleTaskCompletion(TaskItemData togglingCompletionTask) {
-    final isCompleted =
-        TaskItemData.reverseCompletion(togglingCompletionTask.isCompleted);
+  void toggleTaskCompletion(ManagementItemData togglingCompletionTask) {
+    final isCompleted = reverseCompletion(togglingCompletionTask.isCompleted);
     final createdAt = togglingCompletionTask.createdAt;
-    final completedAt = TaskItemData.getCompletionStatus(isCompleted)
+    final completedAt = getCompletionStatus(isCompleted)
         ? DateTime.now().toIso8601String()
         : "";
     final updatedTodo = togglingCompletionTask.copyWith(
@@ -29,7 +29,7 @@ class TaskPageModel extends ChangeNotifier {
       createdAt: createdAt,
       completedAt: completedAt,
     );
-    taskProvider.updateTask(updatedTodo);
+    taskProvider.updateManagementItemData(updatedTodo);
     notifyListeners();
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../models/models.dart';
 import '../../../../providers/providers.dart';
+import '../../../../utilities/utilities.dart';
 
 class TodoAddDialogModel extends ChangeNotifier {
   TodoAddDialogModel({
@@ -12,22 +13,22 @@ class TodoAddDialogModel extends ChangeNotifier {
     memoController.text = "";
   }
 
-  final TodoProvider todoProvider;
+  final ManagementDataProvider todoProvider;
   final titleController = TextEditingController();
   final tagController = TextEditingController();
   final memoController = TextEditingController();
 
   void addTodo() {
     final todo = TodoItemData(
-      id: todoProvider.todoList.length,
+      id: todoProvider.managementDataList.length,
       title: titleController.text,
       tag: tagController.text,
-      isCompleted: TodoItemData.intFalse,
+      isCompleted: intFalse,
       createdAt: DateTime.now().toIso8601String(),
       memo: memoController.text,
     );
 
-    todoProvider.addTodo(todo);
+    todoProvider.addManagementItemData(todo);
     notifyListeners();
   }
 }
