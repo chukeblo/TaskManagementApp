@@ -13,14 +13,14 @@ class TaskAddDialogModel extends ChangeNotifier {
     memoController.text = "";
   }
 
-  final TaskProvider taskProvider;
+  final ManagementDataProvider taskProvider;
   final titleController = TextEditingController();
   final tagController = TextEditingController();
   final memoController = TextEditingController();
 
   void addTask() {
     final task = TaskItemData(
-      id: taskProvider.taskList.length,
+      id: taskProvider.managementDataList.length,
       title: titleController.text,
       tag: tagController.text,
       isCompleted: intFalse,
@@ -28,7 +28,7 @@ class TaskAddDialogModel extends ChangeNotifier {
       memo: memoController.text,
     );
 
-    taskProvider.addTask(task);
+    taskProvider.addManagementItemData(task);
     notifyListeners();
   }
 }

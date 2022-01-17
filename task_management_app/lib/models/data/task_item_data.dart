@@ -1,28 +1,27 @@
+import '../../models/models.dart';
 import '../../utilities/utilities.dart';
 
-class TaskItemData {
+class TaskItemData extends ManagementItemData {
   const TaskItemData({
-    required this.id,
-    required this.title,
-    this.tag = "",
-    this.isCompleted = intFalse,
-    required this.createdAt,
-    this.completedAt = "",
-    this.memo = "",
-  });
+    required int id,
+    required String title,
+    String tag = "",
+    int isCompleted = intFalse,
+    required String createdAt,
+    String completedAt = "",
+    String memo = "",
+  }) : super(
+          id: id,
+          title: title,
+          tag: tag,
+          isCompleted: isCompleted,
+          createdAt: createdAt,
+          completedAt: completedAt,
+          memo: memo,
+        );
 
-  final int id;
-  final String title;
-  final String tag;
-  final int isCompleted;
-  final String createdAt;
-  final String completedAt;
-  final String memo;
-
-  static const int intTrue = 1;
-  static const int intFalse = 0;
-
-  TaskItemData copyWith({
+  @override
+  ManagementItemData copyWith({
     int? id,
     String? title,
     String? tag,
@@ -42,35 +41,8 @@ class TaskItemData {
     );
   }
 
-  String format(String iso8601String) {
-    if (iso8601String == "") {
-      return iso8601String;
-    }
-    return iso8601String.substring(0, 10);
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      DatabaseConstants.columnId: id,
-      DatabaseConstants.columnTitle: title,
-      DatabaseConstants.columnTag: tag,
-      DatabaseConstants.columnIsCompleted: isCompleted,
-      DatabaseConstants.columnCreatedAt: createdAt,
-      DatabaseConstants.columnCompletedAt: completedAt,
-      DatabaseConstants.columnMemo: memo,
-    };
-  }
-
   @override
   String toString() {
     return "${DatabaseConstants.tableTask}{${DatabaseConstants.columnId}:$id,${DatabaseConstants.columnTitle}:$title,${DatabaseConstants.columnTag}:$tag,${DatabaseConstants.columnIsCompleted}:$isCompleted,${DatabaseConstants.columnCreatedAt}:$createdAt,${DatabaseConstants.columnCompletedAt}:$completedAt,${DatabaseConstants.columnMemo}:$memo}";
-  }
-
-  static int reverseCompletion(int status) {
-    return status == intTrue ? intFalse : intTrue;
-  }
-
-  static bool getCompletionStatus(int status) {
-    return status == intTrue;
   }
 }

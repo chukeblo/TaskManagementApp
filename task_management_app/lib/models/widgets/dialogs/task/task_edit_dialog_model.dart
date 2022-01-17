@@ -15,18 +15,18 @@ class TaskEditDialogModel extends ChangeNotifier {
     memoController.text = memo;
   }
 
-  final TaskProvider taskProvider;
+  final ManagementDataProvider taskProvider;
   final titleController = TextEditingController();
   final tagController = TextEditingController();
   final memoController = TextEditingController();
 
-  void editTask(TaskItemData editingTask) {
+  void editTask(ManagementItemData editingTask) {
     final updatedTask = editingTask.copyWith(
       title: titleController.text,
       tag: tagController.text,
       memo: memoController.text,
     );
-    taskProvider.updateTask(updatedTask);
+    taskProvider.updateManagementItemData(updatedTask);
     notifyListeners();
   }
 }

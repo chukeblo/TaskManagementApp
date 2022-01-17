@@ -18,7 +18,7 @@ class TaskPage extends StatelessWidget {
     );
   }
 
-  List<TaskItemData> tasks = [];
+  List<ManagementItemData> tasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +128,7 @@ class TaskPage extends StatelessWidget {
 
   void _showTaskEditDialog({
     required BuildContext context,
-    required TaskItemData editingTask,
+    required ManagementItemData editingTask,
   }) {
     showDialog(
         context: context,

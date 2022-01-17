@@ -1,26 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/models.dart';
+import '../providers/providers.dart';
 import '../utilities/utilities.dart';
 
-class TaskProvider extends ChangeNotifier {
+class TaskProvider extends ManagementDataProvider {
   TaskProvider({
-    required this.database,
-  }) {
+    required Database database,
+  }) : super(database: database) {
     initialize();
   }
 
-  final Database database;
-  List<TaskItemData> taskList = [];
-
-  Future<void> initialize() async {
-    taskList = await getTaskList(database);
-  }
-
-  Future<List<TaskItemData>> getTaskList(
-    Database database,
-  ) async {
+  @override
+  Future<List<ManagementItemData>> getManagementDataList(
+      Database database) async {
     final List<Map<String, dynamic>> maps =
         await database.query(DatabaseConstants.tableTask);
     return List.generate(maps.length, (i) {
@@ -36,32 +29,35 @@ class TaskProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> addTask(TaskItemData task) async {
-    taskList.add(task);
+  @override
+  Future<void> addManagementItemData(ManagementItemData data) async {
+    managementDataList.add(data);
     await database.insert(
       DatabaseConstants.tableTask,
-      task.toMap(),
+      data.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     notifyListeners();
   }
 
-  Future<void> updateTask(TaskItemData newTask) async {
-    final index = taskList.indexWhere((task) => task.id == newTask.id);
-    taskList[index] = newTask;
+  @override
+  Future<void> updateManagementItemData(ManagementItemData data) async {
+    final index = managementDataList.indexWhere((task) => task.id == data.id);
+    managementDataList[index] = data;
 
     await database.update(
       DatabaseConstants.tableTask,
-      newTask.toMap(),
+      data.toMap(),
       where: "${DatabaseConstants.columnId} = ?",
-      whereArgs: [newTask.id],
+      whereArgs: [data.id],
     );
     notifyListeners();
   }
 
-  Future<void> deleteTask(int targetTaskId) async {
+  @override
+  Future<void> deleteManagementItemData(int id) async {
     final existingTaskIndex =
-        taskList.indexWhere((task) => task.id == targetTaskId);
+        managementDataList.indexWhere((task) => task.id == id);
 
     if (existingTaskIndex == -1) {
       return;
@@ -70,20 +66,20 @@ class TaskProvider extends ChangeNotifier {
     await database.delete(
       DatabaseConstants.tableTask,
       where: "${DatabaseConstants.columnId} = ?",
-      whereArgs: [targetTaskId],
+      whereArgs: [id],
     );
 
     _shrinkAndSynchronizeDatabase(existingTaskIndex + 1);
-    taskList.removeAt(existingTaskIndex);
+    managementDataList.removeAt(existingTaskIndex);
     notifyListeners();
   }
 
   void _shrinkAndSynchronizeDatabase(int startIndex) async {
-    for (var index = startIndex; index < taskList.length; index++) {
-      final task = taskList[index].copyWith(
+    for (var index = startIndex; index < managementDataList.length; index++) {
+      final task = managementDataList[index].copyWith(
         id: index - 1,
       );
-      taskList[index] = task;
+      managementDataList[index] = task;
       await database.update(
         DatabaseConstants.tableTask,
         task.toMap(),
