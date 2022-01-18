@@ -4,6 +4,7 @@ class DatabaseConstants {
   static const String tableTodo = "todo";
   static const String tableTask = "task";
   static const String tableProject = "project";
+  static const String tableWiki = "wiki";
 
   static const String columnId = "id";
   static const String columnTitle = "Title";
@@ -12,4 +13,7 @@ class DatabaseConstants {
   static const String columnCreatedAt = "createdAt";
   static const String columnCompletedAt = "completedAt";
   static const String columnMemo = "memo";
+
+  static const String columnEditHistory = "editHistory";
+  static const String columnNotes = "notes";
 }
