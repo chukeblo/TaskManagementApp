@@ -59,7 +59,7 @@ class TaskPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${task.format(task.createdAt)} ~ ${task.format(task.completedAt)}",
+                    "${trimIso8601String(task.createdAt)} ~ ${trimIso8601String(task.completedAt)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 14,

@@ -58,7 +58,7 @@ class TodoPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${todo.format(todo.createdAt)} ~ ${todo.format(todo.completedAt)}",
+                    "${trimIso8601String(todo.createdAt)} ~ ${trimIso8601String(todo.completedAt)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 14,

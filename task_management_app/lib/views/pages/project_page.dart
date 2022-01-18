@@ -58,7 +58,7 @@ class ProjectPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${project.format(project.createdAt)} ~ ${project.format(project.completedAt)}",
+                    "${trimIso8601String(project.createdAt)} ~ ${trimIso8601String(project.completedAt)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 14,
