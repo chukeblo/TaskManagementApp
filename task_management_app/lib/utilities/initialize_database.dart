@@ -8,7 +8,7 @@ Future<Database> initializeDatabase() async {
     join(await getDatabasesPath(), DatabaseConstants.databaseFileName),
     onCreate: _onCreate,
     onUpgrade: _onUpgrade,
-    version: 3,
+    version: 4,
   );
   return database;
 }
@@ -47,4 +47,7 @@ const migrationScripts = {
   '3': [
     'CREATE TABLE ${DatabaseConstants.tableProject}(${DatabaseConstants.columnId} INTEGER PRIMARY KEY, ${DatabaseConstants.columnTitle} TEXT, ${DatabaseConstants.columnIsCompleted} INTEGER, ${DatabaseConstants.columnTag} TEXT, ${DatabaseConstants.columnCreatedAt} TEXT, ${DatabaseConstants.columnCompletedAt} TEXT, ${DatabaseConstants.columnMemo} TEXT)'
   ],
+  '4': [
+    'CREATE TABLE ${DatabaseConstants.tableWiki}(${DatabaseConstants.columnId} INTEGER PRIMARY KEY, ${DatabaseConstants.columnTitle} TEXT, ${DatabaseConstants.columnTag} TEXT, ${DatabaseConstants.columnCreatedAt} TEXT, ${DatabaseConstants.columnEditHistory} TEXT, ${DatabaseConstants.columnNotes} TEXT)'
+  ]
 };
