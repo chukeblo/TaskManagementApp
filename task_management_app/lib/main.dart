@@ -20,6 +20,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => ProjectProvider(database: database),
         ),
+        ChangeNotifierProvider(
+          create: (_) => WikiProvider(database: database),
+        ),
       ],
       child: const TaskManagementApp(),
     ),
